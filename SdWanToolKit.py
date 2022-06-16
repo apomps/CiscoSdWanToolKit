@@ -10,6 +10,8 @@ from threading import Thread
 import ipaddress
 import re
 from jinja2 import Template
+from colorama import Fore, Back, Style, init
+init()
 
 vmanage = "10.10.20.90"
 base_url = f"https://{vmanage}:8443/"
@@ -130,15 +132,21 @@ class SdWan:
     def nping(self):
         def run_nping(nping_endpoint,payload,i):
             r = self.sess.post(url=base_url+nping_endpoint, data=json.dumps(payload), verify=False).json()
-            nping_results.append({"HOSTNAME": i["host-name"],
-            "deviceId": i["deviceId"],
-            "site-id": i["site-id"],
-            "ROUTE_USED": i["prefix"],
-            "VPN": i["vpn-id"],
-            "packetsTransmitted": r["packetsTransmitted"],
-            "packetsReceived": r["packetsReceived"],
-            "lossPercentage": r["lossPercentage"],
-            "avgRoundTrip": r["avgRoundTrip"]})
+            reset = Style.RESET_ALL
+            color = Fore.CYAN
+            if r["lossPercentage"] == 100:
+                color = Fore.RED
+            else:
+                color = Fore.CYAN
+            nping_results.append({"HOSTNAME": color+i["host-name"]+reset,
+            "deviceId": color+i["deviceId"]+reset,
+            "site-id": color+i["site-id"]+reset,
+            "ROUTE_USED": color+i["prefix"]+reset,
+            "VPN": color+i["vpn-id"]+reset,
+            "packetsTransmitted": color+str(r["packetsTransmitted"])+reset,
+            "packetsReceived": color+str(r["packetsReceived"])+reset,
+            "lossPercentage": color+str(r["lossPercentage"])+reset,
+            "avgRoundTrip": color+str(r["avgRoundTrip"])+reset})
 
         startTime = time.time() #PING
         nping_results = []
@@ -177,14 +185,18 @@ class SdWan:
             print("Does not look like an IPv4 address. Please try again. Bye!")
             exit()
 
-    def sdwan_site_details(self):
+    def sdwan_site_details(self,user_input):
         device_interface = "dataservice/device/interface"
         omp_api = "dataservice/device/omp/summary"
         bfd_api = "dataservice/device/bfd/sessions"
         tunnel_api = "dataservice/device/tunnel/statistics"
+        if user_input == "":
+            site_id = self.vsmart["originator-site-id"]
+        else:
+            site_id = user_input
         all_devices_detail = []
         for device in self.devices["data"]:
-            if device["site-id"] == self.vsmart["originator-site-id"]:
+            if device["site-id"] == site_id:
                 if device["reachability"] == "reachable":
                     interfaces = self.sess.get(url=base_url+device_interface+"?af-type=ipv4&deviceId="+device["deviceId"], verify=False).json()
                     omp = self.sess.get(url=base_url+omp_api+"?deviceId="+device["deviceId"], verify=False).json()   
@@ -233,24 +245,24 @@ class SdWan:
 
     def option_1(self):
         nping_results = self.nping()
-        print(banner_template.render(find_host=self.find_host,vpn=self.find_vpn,vsmart=self.vsmart["stats"],omp=self.vsmart["omp"]))
+        print(banner_template.render(find_host=self.find_host,vpn=self.find_vpn,vsmart=self.vsmart["stats"],omp=self.vsmart["omp"],color=Fore.BLUE,reset=Style.RESET_ALL))
         print(tabulate(nping_results,headers="keys",tablefmt="fancy_grid"))
     def option_2(self):
         self.get_find_host()
         self.get_routing()
         self.get_best_route()
         nping_results = self.nping()
-        print(banner_template.render(find_host=self.find_host,vpn=self.find_vpn,vsmart=self.vsmart["stats"],omp=self.vsmart["omp"]))
+        print(banner_template.render(find_host=self.find_host,vpn=self.find_vpn,vsmart=self.vsmart["stats"],omp=self.vsmart["omp"],color=Fore.BLUE,reset=Style.RESET_ALL))
         print(tabulate(nping_results,headers="keys",tablefmt="fancy_grid"))
     def option_3(self):
         self.get_routing()
         self.get_best_route()
-        print("Routes updated to tool")
-    #def option_4():
-    #    print("option 4")
+        print("Routes updated")
+    def option_4(self):
+        self.sdwan_site_details(user_input="")
     def option_5(self):
-        #print("option 5")
-        self.sdwan_site_details()
+        user_input = input("What is the site ID:")
+        self.sdwan_site_details(user_input)
     def option_6(self):
         print("Thank you. Bye!")
         exit()
@@ -263,7 +275,7 @@ if __name__ == "__main__":
     sdwan.get_routing()
     sdwan.get_best_route()
     nping_results = sdwan.nping()
-    print(banner_template.render(find_host=sdwan.find_host,vpn=sdwan.find_vpn,vsmart=sdwan.vsmart["stats"],omp=sdwan.vsmart["omp"]))
+    print(banner_template.render(find_host=sdwan.find_host,vpn=sdwan.find_vpn,vsmart=sdwan.vsmart["stats"],omp=sdwan.vsmart["omp"],color=Fore.BLUE,reset=Style.RESET_ALL))
     print(tabulate(nping_results,headers="keys",tablefmt="fancy_grid"))
     user_input = 0
     while user_input < 7:
@@ -271,9 +283,9 @@ if __name__ == "__main__":
         print(menu_template.render(host=sdwan.find_host,vpn=sdwan.find_vpn,site=sdwan.vsmart["originator-site-id"]))
 
         try:
-            user_input = int(input("Please select an option:",end=""))
+            user_input = int(input("Please select an option:"))
             option_selected = getattr(sdwan,"option_"+str(user_input))
             option_selected()
         except:
-            print("Does not look like a valid option. Please try again.")
+            print("Something went wrong. Please try again.")
             exit()

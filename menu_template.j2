@@ -1,14 +1,17 @@
 ================================
 {%- if vpn == "" %}
+
 1 - Run nping on {{ host }} on all possible VPNs
 {%- else %}
+
 1 - Run nping on {{ host }} on VPN {{ vpn }}
 {%- endif %}
 2 - Run nping on new host
 3 - Refresh routing information
-4 - Refresh events - TESTING
 {%- if site != "" %}
-5 - Get details on site {{ site }}
+4 - Get details on site {{ site }}
 {%- endif %}
+5 - Get details on site different site ID
 6 - Exit
+
 ================================

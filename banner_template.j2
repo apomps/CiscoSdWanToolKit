@@ -1,8 +1,8 @@
 ========================================================================================
 {%- if vpn == "" %}
-nPing completed on {{ find_host }} on all possible VPNs
+nPing completed on {{ color }}{{ find_host }}{{ reset }} on all possible VPNs
 {%- else %}
-nPing completed on {{ find_host }} on VPN {{ vpn }}
+nPing completed on {{ color }}{{ find_host }}{{ reset }}  on VPN {{ color }}{{ vpn }}{{ reset }} 
 {%- endif %}
 {{ vsmart }}
 Best OMP route information from vSmart: {{ omp }}
