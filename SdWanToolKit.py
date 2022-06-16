@@ -1,10 +1,11 @@
 import requests
+import urllib3
+urllib3.disable_warnings()
 import json
 from tabulate import tabulate
 import time
 from datetime import datetime
-import urllib3
-urllib3.disable_warnings()
+import os
 from threading import Thread
 import ipaddress
 import re
@@ -16,28 +17,12 @@ auth_endpoint = "j_security_check"
 login_body = {"j_username": "admin","j_password": "C1sco12345"}
 token_endpoint = "dataservice/client/token"
 
-banner_template = Template("""
-========================================================================================
-nPing completed on {{ find_host }} 
-{{ vsmart }}
-Best route information from vSmart: {{ omp }}
-========================================================================================\n""")
-
-menu_template = Template("""================================\n
-{%- if vpn == "" %}
-1 - Run nping on {{ host }} on all possible VPNs
-{%- else %}
-1 - Run nping on {{ host }} on VPN {{ vpn }}
-{%- endif %}
-2 - Run nping on new host
-3 - Refresh routing information
-4 - Refresh events - TESTING
-{%- if site != "" %}
-5 - Get details on site {{ site }}
-{%- endif %}
-6 - Exit
-================================
-Enter a choice and press enter:""")
+with open(f"{os.getcwd()}/banner_template.j2","r") as banner:
+    banner_template = banner.read()
+banner_template = Template(banner_template)
+with open(f"{os.getcwd()}/menu_template.j2","r") as menu:
+    menu_template = menu.read()
+menu_template = Template(menu_template)
 
 class SdWan:
     def __init__(self):
@@ -248,14 +233,14 @@ class SdWan:
 
     def option_1(self):
         nping_results = self.nping()
-        print(banner_template.render(find_host=self.find_host,vsmart=self.vsmart["stats"],omp=self.vsmart["omp"]))
+        print(banner_template.render(find_host=self.find_host,vpn=self.find_vpn,vsmart=self.vsmart["stats"],omp=self.vsmart["omp"]))
         print(tabulate(nping_results,headers="keys",tablefmt="fancy_grid"))
     def option_2(self):
         self.get_find_host()
         self.get_routing()
         self.get_best_route()
         nping_results = self.nping()
-        print(banner_template.render(find_host=self.find_host,vsmart=self.vsmart["stats"],omp=self.vsmart["omp"]))
+        print(banner_template.render(find_host=self.find_host,vpn=self.find_vpn,vsmart=self.vsmart["stats"],omp=self.vsmart["omp"]))
         print(tabulate(nping_results,headers="keys",tablefmt="fancy_grid"))
     def option_3(self):
         self.get_routing()
@@ -278,7 +263,7 @@ if __name__ == "__main__":
     sdwan.get_routing()
     sdwan.get_best_route()
     nping_results = sdwan.nping()
-    print(banner_template.render(find_host=sdwan.find_host,vsmart=sdwan.vsmart["stats"],omp=sdwan.vsmart["omp"]))
+    print(banner_template.render(find_host=sdwan.find_host,vpn=sdwan.find_vpn,vsmart=sdwan.vsmart["stats"],omp=sdwan.vsmart["omp"]))
     print(tabulate(nping_results,headers="keys",tablefmt="fancy_grid"))
     user_input = 0
     while user_input < 7:
@@ -286,7 +271,7 @@ if __name__ == "__main__":
         print(menu_template.render(host=sdwan.find_host,vpn=sdwan.find_vpn,site=sdwan.vsmart["originator-site-id"]))
 
         try:
-            user_input = int(input())
+            user_input = int(input("Please select an option:",end=""))
             option_selected = getattr(sdwan,"option_"+str(user_input))
             option_selected()
         except:

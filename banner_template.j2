@@ -1,0 +1,9 @@
+========================================================================================
+{%- if vpn == "" %}
+nPing completed on {{ find_host }} on all possible VPNs
+{%- else %}
+nPing completed on {{ find_host }} on VPN {{ vpn }}
+{%- endif %}
+{{ vsmart }}
+Best OMP route information from vSmart: {{ omp }}
+========================================================================================
