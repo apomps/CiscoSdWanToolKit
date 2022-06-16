@@ -90,6 +90,7 @@ class SdWan:
         #return all_devices
 
     def get_best_route(self):
+
         for i in self.devices["data"]:
             if i["device-type"] == "vsmart":
                 self.vsmart = {}
@@ -104,13 +105,13 @@ class SdWan:
                 if len(temp_route) > 1:
                     if temp_route["prefix"] == "0.0.0.0/0":
                         self.vsmart["originator-site-id"] = temp_route["site-id"]
-                        self.vsmart["omp"] = f'No specific OMP route for {self.find_host}, most likely default route will be used, originated by {temp_route["originator"]}, site-id {temp_route["site-id"]}'
+                        self.vsmart["omp"] = f'No specific OMP route for {Fore.BLUE}{self.find_host}{Style.RESET_ALL}, most likely default route will be used, originated by {Fore.BLUE}{temp_route["originator"]}{Style.RESET_ALL}, site-id {Fore.BLUE}{temp_route["site-id"]}{Style.RESET_ALL}'
                     else:
                         self.vsmart["originator-site-id"] = temp_route["site-id"]
-                        self.vsmart["omp"] = f'Most specific OMP route for {self.find_host} is {temp_route["prefix"]}, originated by {temp_route["originator"]}, site-id {temp_route["site-id"]}'
+                        self.vsmart["omp"] = f'Most specific OMP route for {Fore.BLUE}{self.find_host}{Style.RESET_ALL} is {Fore.BLUE}{temp_route["prefix"]}{Style.RESET_ALL}, originated by {Fore.BLUE}{temp_route["originator"]}{Style.RESET_ALL}, site-id {Fore.BLUE}{temp_route["site-id"]}{Style.RESET_ALL}'
                 else:
                     self.vsmart["originator-site-id"] = ""
-                    self.vsmart["omp"] = f'No specific OMP route for {self.find_host}, most likely default route will be used'
+                    self.vsmart["omp"] = f'No specific OMP route for {Fore.BLUE}{self.find_host}{Style.RESET_ALL}, most likely default route will be used'
                 break
     
         matched_routes = {}
