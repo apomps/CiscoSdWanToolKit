@@ -8,7 +8,6 @@ Having a host IPv4 address as a starting point, this scripts attempts to:
 
 The idea is to have a CLI tool able to provide as much operational details as output, with minmal information as input, such as an IP or site ID.
 The interaction with the tool is menu based and each option is a method or collective methods making it modular, so more functions can be added to the tool if needed. For example, interact with DDI for more information on the IP.
-The output is giving in tabular for a more oginized view and has color to catch the eye. 
 
 This script was built to interact with the [Cisco DevNet Reservable Sandbox for SD-WAN 20.4](https://devnetsandbox.cisco.com/RM/Diagram/Index/4a0f4308-1fc4-4f4c-ae8c-2734f705bd21?diagramType=Topology). So the credentials used to authenticate towards the vManage are only applicable to the Cisco Sandbox. If to use in another enviornment the varibles below would need to be changed.
 
