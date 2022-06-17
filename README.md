@@ -16,14 +16,14 @@ This script was built to interact with the [Cisco DevNet Reservable Sandbox for 
 | Method | API path |
 | --- | --- |
 | `POST` | `/j_security_check` |
-| `GET` | `dataservice/client/token` |
+| `GET` | `/dataservice/client/token` |
 | `GET` | `/dataservice/device/interface` |
 | `GET` | `/dataservice/device/omp/summary` |
-| `GET` | `dataservice/device/omp/routes/received` |
+| `GET` | `/dataservice/device/omp/routes/received` |
 | `GET` | `/dataservice/device/bfd/sessions` |
 | `GET` | `/dataservice/device/tunnel/statistics` |
-| `GET` | `dataservice/device/ip/routetable` |
-| `POST` | `dataservice/device/tools/nping` |
+| `GET` | `/dataservice/device/ip/routetable` |
+| `POST` | `/dataservice/device/tools/nping` |
 
 For more information on available [vManage APIs v20-4](https://developer.cisco.com/docs/sdwan/#!sd-wan-vmanage-v20-4):
 
