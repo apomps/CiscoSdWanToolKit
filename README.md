@@ -1,16 +1,16 @@
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/apomps/CiscoSdWanToolKit)
-# Troubleshootig Toolkit for Cisco SD-WAN
+# Troubleshooting Toolkit for Cisco SD-WAN
 
 This python script interacts with the Cisco SD-WAN vManage REST API, to perform network troubleshooting programmatically.
-Having a host IPv4 address as a starting point, this scripts attempts to:
+Having a host IPv4 address as a starting point, this script attempts to:
 - Locate which site ID the host was originated, using OMP prefixes the controller received;
-- Managed devices (i.e.: vEdges, cEdges) generates ICMP packets using nPing to confirm reachability towards the target host;
-- Gather operational, such as interface, omp, bfd details of managed devices of the site;
+- Managed devices (i.e.: vEdges, cEdges) generate ICMP packets using nPing to confirm reachability towards the target host;
+- Gather operational details, such as interface, omp, or bfd, of managed devices of the site;
 
-The idea is to have a CLI tool able to provide as much operational details as output, with minmal information as input, such as an IP or site ID.
-The interaction with the tool is menu based and each option is a method or collective methods making it modular, so more functions can be added to the tool if needed. For example, interact with DDI for more information on the IP.
+The idea is to have a CLI tool able to provide as many operational details as output, with minimal information as input, such as an IP or site ID.
+The interaction with the tool is menu-based and each option is either method or collective methods. This makes it modular, so more functions can be added to the tool if needed. For example, interacting with DDI for more information on the IP.
 
-This script was built to interact with the [Cisco DevNet Reservable Sandbox for SD-WAN 20.4](https://devnetsandbox.cisco.com/RM/Diagram/Index/4a0f4308-1fc4-4f4c-ae8c-2734f705bd21?diagramType=Topology). So the credentials used to authenticate towards the vManage are only applicable to the Cisco Sandbox. If to use in another enviornment the varibles below would need to be changed.
+This script was built to interact with the [Cisco DevNet Reservable Sandbox for SD-WAN 20.4](https://devnetsandbox.cisco.com/RM/Diagram/Index/4a0f4308-1fc4-4f4c-ae8c-2734f705bd21?diagramType=Topology). So the credentials used to authenticate towards the vManage are only applicable to the Cisco Sandbox. If to use in another environment the variables below would need to be changed.
 
 ## API used for this project
 | Method | API path |
@@ -41,7 +41,7 @@ pip install -r requirements.txt
 
 
 # About me!
-I am a Network Engineer and very excited in finding new created ways to automate... anything!
+I'm Arthur Pompeu, I'm a Network Engineer and very excited about finding new and creative ways to automate just about... anything!
 
 Hope this code helps you in some way!
 
