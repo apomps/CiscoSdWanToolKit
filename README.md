@@ -40,9 +40,6 @@ pip install -r requirements.txt
 ![sdwan](https://user-images.githubusercontent.com/68168232/174213051-48b85589-7312-48c0-bbab-3cdf0d477a0e.gif)
 
 
-https://user-images.githubusercontent.com/68168232/174213091-5adeace7-14b4-4205-ae06-902e6217d048.mp4
-
-
 # About me!
 I am a Network Engineer and very excited in finding new created ways to automate... anything!
 
