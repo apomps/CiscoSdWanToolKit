@@ -1,3 +1,4 @@
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/apomps/CiscoSdWanToolKit)
 # Troubleshootig Toolkit for Cisco SD-WAN
 
 This python script interacts with the Cisco SD-WAN vManage REST API, to perform network troubleshooting programmatically.
