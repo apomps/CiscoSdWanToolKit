@@ -10,7 +10,7 @@ Having a host IPv4 address as a starting point, this script attempts to:
 The idea is to have a CLI tool able to provide as many operational details as output, with minimal information as input, such as an IP or site ID.
 The interaction with the tool is menu-based and each option is either method or collective methods. This makes it modular, so more functions can be added to the tool if needed. For example, interacting with DDI for more information on the IP.
 
-This script was built to interact with the [Cisco DevNet Reservable Sandbox for SD-WAN 20.4](https://devnetsandbox.cisco.com/RM/Diagram/Index/4a0f4308-1fc4-4f4c-ae8c-2734f705bd21?diagramType=Topology). So the credentials used to authenticate towards the vManage are only applicable to the Cisco Sandbox. If to use in another environment the variables below would need to be changed.
+This script was built to interact with the [Cisco DevNet Reservable Sandbox for SD-WAN 20.4](https://devnetsandbox.cisco.com/RM/Diagram/Index/4a0f4308-1fc4-4f4c-ae8c-2734f705bd21?diagramType=Topology). So the credentials used to authenticate towards the vManage are only applicable to the Cisco Sandbox. If used in another environment the variables below would need to be changed.
 
 ## API used for this project
 | Method | API path |
