@@ -3,7 +3,7 @@
 This python script interacts with the Cisco SD-WAN vManage REST API, to perform network troubleshooting programmatically.
 Having a host IPv4 address as a starting point, this scripts attempts to:
 - Locate which site ID the host was originated, using OMP prefixes the controller received;
-- Managed devices (vEdges) generates ICMP packets to confirm reachability towards the host;
+- Managed devices (i.e.: vEdges, cEdges) generates ICMP packets using nPing to confirm reachability towards the target host;
 - Gather operational, such as interface, omp, bfd details of managed devices of the site;
 
 The idea is to have a CLI tool able to provide as much operational details as output, with minmal information as input, such as an IP or site ID.
@@ -33,6 +33,10 @@ git clone https://github.com/apomps/CiscoSdWanToolKit
 cd CiscoSdWanToolKit
 pip install -r requirements.txt
 ```
+
+### Example of Toolkit being used
+![sdwantoolkit](https://user-images.githubusercontent.com/68168232/174201627-d6024e13-3f32-49be-aaaf-46d47da84cf4.png)
+
 
 # About me!
 I am a Network Engineer and very excited in finding new created ways to automate... anything!
